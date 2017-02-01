@@ -1,3 +1,4 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "nokogiri", ">= 1.5.4"
+# Specify your gem's dependencies in ruby-simple-vuln-gem.gemspec
+gemspec
