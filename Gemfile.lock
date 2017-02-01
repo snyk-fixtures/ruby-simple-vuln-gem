@@ -2,14 +2,12 @@ PATH
   remote: .
   specs:
     ruby-simple-vuln-gem (0.1.0)
-      nokogiri (>= 1.5.4)
+      nokogiri (= 1.5.4)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    mini_portile2 (2.1.0)
-    nokogiri (1.7.0.1)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.5.4)
     rake (10.5.0)
 
 PLATFORMS
