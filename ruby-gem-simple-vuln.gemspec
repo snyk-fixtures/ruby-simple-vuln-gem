@@ -4,14 +4,14 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'ruby/simple/vuln/gem/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "ruby-simple-vuln-gem"
+  spec.name          = "ruby-gem-simple-vuln"
   spec.version       = Ruby::Simple::Vuln::Gem::VERSION
   spec.authors       = ["Shaun Smith"]
   spec.email         = ["shaun@snyk.io"]
 
   spec.summary       = "Simple vulnerable gem"
   spec.description   = "This gem has a vulnerable dependency"
-  spec.homepage      = "https://github.com/snyk-fixtures/ruby-simple-vuln-gem"
+  spec.homepage      = "https://github.com/snyk-fixtures/ruby-gem-simple-vuln"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

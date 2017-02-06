@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-simple-vuln-gem (0.1.0)
+    ruby-gem-simple-vuln (0.1.0)
       nokogiri (= 1.5.4)
 
 GEM
@@ -16,7 +16,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.13)
   rake (~> 10.0)
-  ruby-simple-vuln-gem!
+  ruby-gem-simple-vuln!
 
 BUNDLED WITH
    1.13.7
