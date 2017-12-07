@@ -1,0 +1,9 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.8.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-RUBY-NOKOGIRI-20127:
+    - '* > ruby-gem-simple-vuln@0.1.0':
+        reason: None given
+        expires: '2018-01-06T15:48:31.496Z'
+patch: {}
