@@ -1,0 +1,644 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Snyk Open Source",
+          "rules": [
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-1055008",
+              "shortDescription": {
+                "text": "Low severity - XML External Entity (XXE) Injection vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "(CVE-2020-26247) nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[nokogiri](https://nokogiri.org) is a gem for parsing HTML, XML, SAX, and Reader.\n\nAffected versions of this package are vulnerable to XML External Entity (XXE) Injection. XML Schemas parsed by `Nokogiri::XML::Schema` are trusted by default, allowing external resources to be accessed over the network, potentially enabling XXE or SSRF attacks. This behavior is counter to the security policy followed by Nokogiri maintainers, which is to treat all input as untrusted by default whenever possible.\n\n# Details\nXXE Injection is a type of attack against an application that parses XML input.\nXML is a markup language that defines a set of rules for encoding documents in a format that is both human-readable and machine-readable. By default, many XML processors allow specification of an external entity, a URI that is dereferenced and evaluated during XML processing. When an XML document is being parsed, the parser can make a request and include the content at the specified URI inside of the XML document.\n\nAttacks can include disclosing local files, which may contain sensitive data such as passwords or private user data, using file: schemes or relative paths in the system identifier.\n\nFor example, below is a sample XML document, containing an XML element- username.\n\n```xml\n<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n   <username>John</username>\n</xml>\n```\n\nAn external XML entity - `xxe`, is defined using a system identifier and present within a DOCTYPE header. These entities can access local or remote content. For example the below code contains an external XML entity that would fetch the content of  `/etc/passwd` and display it to the user rendered by `username`.\n\n```xml\n<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE foo [\n   <!ENTITY xxe SYSTEM \"file:///etc/passwd\" >]>\n   <username>&xxe;</username>\n</xml>\n```\n\nOther XXE Injection attacks can access local resources that may not stop returning data, possibly impacting application availability and leading to Denial of Service.\n\n# Remediation\nUpgrade `nokogiri` to version 1.11.0.rc4 or higher.\n# References\n- [GitHub Additional Information](https://github.com/advisories/GHSA-vr8q-g5c7-m54m)\n- [GitHub Release](https://github.com/sparklemotion/nokogiri/releases/tag/v1.11.0.rc4)\n- [RedHat Bugzilla Bug](https://bugzilla.redhat.com/show_bug.cgi?id=1912487)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-611",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-20127",
+              "shortDescription": {
+                "text": "Medium severity - XML External Entity (XXE) Injection vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "(CVE-2013-6461) nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[nokogiri](https://rubygems.org/gems/nokogiri) is an HTML, XML, SAX, and Reader parser, with the ability to search documents via XPath or CSS3 selectors.\n\nAffected versions of this Gem are vulnerable to Denial of Service (DoS) attacks. It contains an flaw that is triggered during the parsing of XML data. The issue is due to an incorrectly configured XML parser accepting XML external entities from an untrusted source. By sending specially crafted XML data, a remote attacker can cause an infinite loop and crash the program.\n\n# Remediation\nUpgrade `nokogiri` to versions 1.5.11, 1.6.1 or higher.\n\n# References\n- [Rubysec Security Advisory](https://rubysec.com/advisories/nokogiri-OSVDB-101458/)\n- [Google Forum](https://groups.google.com/forum/#!topic/ruby-security-ann/DeJpjTAg1FA)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-400",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-20129",
+              "shortDescription": {
+                "text": "Medium severity - Denial of Service (DoS) vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "(CVE-2013-6460) nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[nokogiri](https://rubygems.org/gems/nokogiri) is an HTML, XML, SAX, and Reader parser, with the ability to search documents via XPath or CSS3 selectors.\n\nAffected versions of this Gem are vulnerable to Denial of Service attacks. The issue is triggered when handling a specially crafted XML document, which can result in an infinite loop. This may allow a context-dependent attacker to crash the server.\n\n# Details\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its intended and legitimate users.\r\n\r\nUnlike other vulnerabilities, DoS attacks usually do not aim at breaching security. Rather, they are focused on making websites and services unavailable to genuine users resulting in downtime.\r\n\r\nOne popular Denial of Service vulnerability is DDoS (a Distributed Denial of Service), an attack that attempts to clog network pipes to the system by generating a large volume of traffic from many machines.\r\n\r\nWhen it comes to open source libraries, DoS vulnerabilities allow attackers to trigger such a crash or crippling of the service by using a flaw either in the application code or from the use of open source libraries.\r\n\r\nTwo common types of DoS vulnerabilities:\r\n\r\n* High CPU/Memory Consumption- An attacker sending crafted requests that could cause the system to take a disproportionate amount of time to process. For example, [commons-fileupload:commons-fileupload](SNYK-JAVA-COMMONSFILEUPLOAD-30082).\r\n\r\n* Crash - An attacker sending crafted requests that could cause the system to crash. For Example,  [npm `ws` package](npm:ws:20171108)\n\n# Remediation\nUpgrade `nokogiri` to version 1.5.11, 1.6.1 or higher.\n\n# References\n- [Rubysec Security Advisory](http://rubysec.com/advisories/nokogiri-OSVDB-101179)\n- [Google Forum](https://groups.google.com/forum/#!topic/ruby-security-ann/DeJpjTAg1FA)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-400",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-20157",
+              "shortDescription": {
+                "text": "Medium severity - Denial of Service (DoS) vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[nokogiri](https://rubygems.org/gems/nokogiri) is an HTML, XML, SAX, and Reader parser, with the ability to search documents via XPath or CSS3 selectors.\n\nAffected versions of this Gem are vulnerable to Denial of Service (DoS) attacks. It contains a flaw that is triggered when handling a root element in an XML document. This may allow a remote attacker to cause a consumption of memory resources.\n\n# Details\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its intended and legitimate users.\r\n\r\nUnlike other vulnerabilities, DoS attacks usually do not aim at breaching security. Rather, they are focused on making websites and services unavailable to genuine users resulting in downtime.\r\n\r\nOne popular Denial of Service vulnerability is DDoS (a Distributed Denial of Service), an attack that attempts to clog network pipes to the system by generating a large volume of traffic from many machines.\r\n\r\nWhen it comes to open source libraries, DoS vulnerabilities allow attackers to trigger such a crash or crippling of the service by using a flaw either in the application code or from the use of open source libraries.\r\n\r\nTwo common types of DoS vulnerabilities:\r\n\r\n* High CPU/Memory Consumption- An attacker sending crafted requests that could cause the system to take a disproportionate amount of time to process. For example, [commons-fileupload:commons-fileupload](SNYK-JAVA-COMMONSFILEUPLOAD-30082).\r\n\r\n* Crash - An attacker sending crafted requests that could cause the system to crash. For Example,  [npm `ws` package](npm:ws:20171108)\n\n# Remediation\nUpgrade `nokogiri` to version 1.6.3 or higher.\n\n# References\n- [Rubysec Security Advisory](https://rubysec.com/advisories/nokogiri-OSVDB-118481)\n- [GitHub PR](https://github.com/sparklemotion/nokogiri/pull/1087)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-400",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-20214",
+              "shortDescription": {
+                "text": "Medium severity - Denial of Service (DoS) vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "(CVE-2015-1819) nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\r\n[nokogiri](https://rubygems.org/gems/nokogiri) is an HTML, XML, SAX, and Reader parser, with the ability to search documents via XPath or CSS3 selectors.\r\nAffected versions of this Gem are vulnerable to Denial of Service (DoS) attacks.\r\nThis flaw could cause an application that uses libxml2 to use an\r\nexcessive amount of memory.\r\n\r\n# Details\r\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its intended and legitimate users.\r\n\r\nUnlike other vulnerabilities, DoS attacks usually do not aim at breaching security. Rather, they are focused on making websites and services unavailable to genuine users resulting in downtime.\r\n\r\nOne popular Denial of Service vulnerability is DDoS (a Distributed Denial of Service), an attack that attempts to clog network pipes to the system by generating a large volume of traffic from many machines.\r\n\r\nWhen it comes to open source libraries, DoS vulnerabilities allow attackers to trigger such a crash or crippling of the service by using a flaw either in the application code or from the use of open source libraries.\r\n\r\nTwo common types of DoS vulnerabilities:\r\n\r\n* High CPU/Memory Consumption- An attacker sending crafted requests that could cause the system to take a disproportionate amount of time to process. For example, [commons-fileupload:commons-fileupload](SNYK-JAVA-COMMONSFILEUPLOAD-30082).\r\n\r\n* Crash - An attacker sending crafted requests that could cause the system to crash. For Example,  [npm `ws` package](npm:ws:20171108)\r\n\r\n# Remediation\r\nUpgrade `nokogiri` to version 1.6.6.4, 1.6.7.rc4 or higher.\r\n\r\n# References\r\n- [Rubysec Security Advisory](http://rubysec.com/advisories/nokogiri-CVE-2015-1819)\r\n- [GitHub Issue](https://github.com/sparklemotion/nokogiri/issues/1374)\r\n- [Ubuntu Security Notices](https://www.ubuntu.com/usn/usn-2812-1/)"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-400",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-20299",
+              "shortDescription": {
+                "text": "High severity - XML External Entity (XXE) Injection vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[nokogiri](https://nokogiri.org) is a gem for parsing HTML, XML, SAX, and Reader.\n\nAffected versions of this package are vulnerable to XML External Entity (XXE) Injection when opting into the `DTDLOAD` option and opting out of the `NONET` option.\r\n`Nokogiri` is affected by series of vulnerabilities in libxml2 and libxslt, which are libraries it depends on. When handling the expansion of XML external entities (XXE) in libxml2, you can specify documents to be read. Opting into the `DTDLOAD` option and opting out of the `NONET` option in `Nokogiri` allows unknown documents to be loaded from the network. This can be used by attackers to load specially crafted XML documents on an internal XML parsing service and may lead to unauthorized disclosure of potentially sensitive information.\r\n\r\n**Note:** This vulnerability exists also in versions `<1.5.4` regardless of the options opted into or out of. See more information [here](https://snyk.io/vuln/SNYK-RUBY-NOKOGIRI-20298)\r\n\r\n# Disclosure Timeline\r\n- January 11th, 2017 - Reported the issue to [Mike Dalessio](https://github.com/flavorjones) of Nokogiri Core.\r\n- January 11th, 2017 - Issue triaged and acknowledged by [Mike Dalessio](https://github.com/flavorjones) of Nokogiri Core.\r\n- June 16th, 2018 - A fix has been introduced in Nokogiri 1.8.3 through libxml2 2.9.8.\n\n# Details\nXXE Injection is a type of attack against an application that parses XML input.\nXML is a markup language that defines a set of rules for encoding documents in a format that is both human-readable and machine-readable. By default, many XML processors allow specification of an external entity, a URI that is dereferenced and evaluated during XML processing. When an XML document is being parsed, the parser can make a request and include the content at the specified URI inside of the XML document.\n\nAttacks can include disclosing local files, which may contain sensitive data such as passwords or private user data, using file: schemes or relative paths in the system identifier.\n\nFor example, below is a sample XML document, containing an XML element- username.\n\n```xml\n<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n   <username>John</username>\n</xml>\n```\n\nAn external XML entity - `xxe`, is defined using a system identifier and present within a DOCTYPE header. These entities can access local or remote content. For example the below code contains an external XML entity that would fetch the content of  `/etc/passwd` and display it to the user rendered by `username`.\n\n```xml\n<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE foo [\n   <!ENTITY xxe SYSTEM \"file:///etc/passwd\" >]>\n   <username>&xxe;</username>\n</xml>\n```\n\nOther XXE Injection attacks can access local resources that may not stop returning data, possibly impacting application availability and leading to Denial of Service.\n\n# Remediation\nUpgrade `nokogiri` to version 1.8.3 or higher.\n# References\n- [CVE Details](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-9318)\n- [GitHub Issue](https://github.com/sparklemotion/nokogiri/issues/1582)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-611",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-20367",
+              "shortDescription": {
+                "text": "High severity - Arbitrary Code Execution vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[`nokogiri`](https://rubygems.org/gems/nokogiri) (鋸) is an HTML, XML, SAX, and Reader parser, with the ability to search documents via XPath or CSS3 selectors.\n\nAffected versions of the package are vulnerable to Arbitrary Code Execution or a Denial of Service (memory corruption) via a crafted web site. Nokogiri bundles the `libxslt` library, which is vulnerable in versions below 3.\n\n## Denial of Service (DoS) - CVE-2016-4738\nlibxslt allows remote attackers to execute arbitrary code or cause a denial of service (memory corruption) via a crafted web site.\n\n## Arbitrary Code Execution - CVE-2017-5029\nThe `xsltAddTextString` function in transform.c in libxslt, lacked a check for integer overflow during a size calculation. This allowed a remote attacker to perform an out of bounds memory write via a crafted HTML page.\n\n# Remediation\nUpgrade `nokogiri` to version 1.7.2 or higher.\n\n# References\n- [GitHub Issue](https://github.com/sparklemotion/nokogiri/issues/1634)\n- [GitHub Commit](https://github.com/sparklemotion/nokogiri/commit/0859c487c9f6933d96d998560d88147c841f7336)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-119",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-20368",
+              "shortDescription": {
+                "text": "High severity - Out of Bounds Memory Write vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "(CVE-2017-5029) nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[`nokogiri`](https://rubygems.org/gems/nokogiri) (鋸) is an HTML, XML, SAX, and Reader parser, with the ability to search documents via XPath or CSS3 selectors.\n\nAffected versions of the package are vulnerable to Out of Bounds Memory Write. Nokogiri bundles  the `libxslt` library, which is vulnerable in versions below 3. The `xsltAddTextString` function in `transform.c` lacked a check for integer overflow during a size calculation, which allowed a remote attacker to perform an out of bounds memory write via a crafted HTML page.\n\n# Remediation\nUpgrade `nokogiri` to version 1.7.2 or higher.\n\n# References\n- [GitHub Issue](https://github.com/sparklemotion/nokogiri/issues/1634)\n- [GitHub Commit](https://github.com/sparklemotion/nokogiri/commit/0859c487c9f6933d96d998560d88147c841f7336)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-787",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-20432",
+              "shortDescription": {
+                "text": "High severity - Use of vulnerable libxml2 vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "(CVE-2017-0663,CVE-2017-7375,CVE-2017-7376,CVE-2017-9047,CVE-2017-9048,CVE-2017-9049,CVE-2017-9050) nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[`nokogiri`](https://rubygems.org/gems/nokogiri) (鋸) is an HTML, XML, SAX, and Reader parser, with the ability to search documents via XPath or CSS3 selectors.\n\nAffected versions of the package are vulnerable to many vulnerabilities, including Arbitrary Code Execution and Denial of Service (DoS), and Sensitive Information Exposure. Nokogiri bundles the `libxml2` library, which is vulnerable in versions below 2.9.5.\n\nThe CVEs assigned to the vulnerabilities are:\n\n## CVE-2017-0663\n> It was discovered that a type confusion error existed in libxml2. An attacker could use this to specially construct XML data that could cause a denial of service or possibly execute arbitrary code.\n\n## CVE-2017-7375\n> It was discovered that libxml2 did not properly validate parsed entity references. An attacker could use this to specially construct XML data that could expose sensitive information.\n\n## CVE-2017-7376\n> It was discovered that a buffer overflow existed in libxml2 when handling HTTP redirects. An attacker could use this to specially construct XML data that could cause a denial of service or possibly execute arbitrary code.\n\n## CVE-2017-9047\n> Marcel Böhme and Van-Thuan Pham discovered a buffer overflow in libxml2 when handling elements. An attacker could use this to specially construct XML data that could cause a denial of service or possibly execute arbitrary code.\n\n## CVE-2017-9048\n> Marcel Böhme and Van-Thuan Pham discovered a buffer overread in libxml2 when handling elements. An attacker could use this to specially construct XML data that could cause a denial of service.\n\n## CVE-2017-9049, CVE-2017-9050\n> Marcel Böhme and Van-Thuan Pham discovered multiple buffer overreads in libxml2 when handling parameter-entity references. An attacker could use these to specially construct XML data that could cause a denial of service.\n\n# Remediation\nUpgrade `nokogiri` to version 1.8.1 or higher.\n\n# References\n- [GitHub Issue](https://github.com/sparklemotion/nokogiri/issues/1673)\n- [Ubuntu Security Notice](https://usn.ubuntu.com/usn/usn-3424-1/)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-126",
+                  "CWE-200",
+                  "CWE-399",
+                  "CWE-89",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-22013",
+              "shortDescription": {
+                "text": "High severity - Denial of Service (DoS) vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "(CVE-2017-16932) nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[nokogiri](https://github.com/sparklemotion/nokogiri) is an HTML, XML, SAX, and Reader parser. Among Nokogiri's features is the ability to search documents via XPath or CSS3 selectors. \n\nAffected versions of this package are vulnerable to Denial of Service (DoS), due to using vulnerable version of libxml2. When expanding a parameter entity in a DTD, an infinite recursion could occur and halt expected execution or lead to memory exhaustion.\n\n# Details\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its intended and legitimate users.\r\n\r\nUnlike other vulnerabilities, DoS attacks usually do not aim at breaching security. Rather, they are focused on making websites and services unavailable to genuine users resulting in downtime.\r\n\r\nOne popular Denial of Service vulnerability is DDoS (a Distributed Denial of Service), an attack that attempts to clog network pipes to the system by generating a large volume of traffic from many machines.\r\n\r\nWhen it comes to open source libraries, DoS vulnerabilities allow attackers to trigger such a crash or crippling of the service by using a flaw either in the application code or from the use of open source libraries.\r\n\r\nTwo common types of DoS vulnerabilities:\r\n\r\n* High CPU/Memory Consumption- An attacker sending crafted requests that could cause the system to take a disproportionate amount of time to process. For example, [commons-fileupload:commons-fileupload](SNYK-JAVA-COMMONSFILEUPLOAD-30082).\r\n\r\n* Crash - An attacker sending crafted requests that could cause the system to crash. For Example,  [npm `ws` package](npm:ws:20171108)\n\n# Remediation\nUpgrade `nokogiri` to version 1.8.2 or higher.\n\n# References\n- [Git Hub Issue](https://github.com/sparklemotion/nokogiri/issues/1714)\n- [Bugzilla bug](https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2017-16932)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-400",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-22014",
+              "shortDescription": {
+                "text": "High severity - Denial of Service (DoS) vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "(CVE-2017-15412) nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[nokogiri](https://github.com/sparklemotion/nokogiri) is an HTML, XML, SAX, and Reader parser. Among Nokogiri's features is the ability to search documents via XPath or CSS3 selectors.\n\nAffected versions of this package are vulnerable to Denial of Service (DoS) due to using vulnerable version of libxml2 which incorrectly handled certain fields. An attacker could use this issue with specially constructed XML data to cause libxml2 to consume resources, leading to a denial of service.\n\n# Details\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its intended and legitimate users.\r\n\r\nUnlike other vulnerabilities, DoS attacks usually do not aim at breaching security. Rather, they are focused on making websites and services unavailable to genuine users resulting in downtime.\r\n\r\nOne popular Denial of Service vulnerability is DDoS (a Distributed Denial of Service), an attack that attempts to clog network pipes to the system by generating a large volume of traffic from many machines.\r\n\r\nWhen it comes to open source libraries, DoS vulnerabilities allow attackers to trigger such a crash or crippling of the service by using a flaw either in the application code or from the use of open source libraries.\r\n\r\nTwo common types of DoS vulnerabilities:\r\n\r\n* High CPU/Memory Consumption- An attacker sending crafted requests that could cause the system to take a disproportionate amount of time to process. For example, [commons-fileupload:commons-fileupload](SNYK-JAVA-COMMONSFILEUPLOAD-30082).\r\n\r\n* Crash - An attacker sending crafted requests that could cause the system to crash. For Example,  [npm `ws` package](npm:ws:20171108)\n\n# Remediation\nUpgrade `nokogiri` to version 1.8.2 or higher.\n\n# References\n- [Git Hub Issue](https://github.com/sparklemotion/nokogiri/issues/1714)\n- [Bugzilla Bug](https://bugzilla.redhat.com/show_bug.cgi?id=1523128)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-400",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-459107",
+              "shortDescription": {
+                "text": "High severity - Command Injection vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "(CVE-2019-5477) nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[nokogiri](https://nokogiri.org) is a gem for parsing HTML, XML, SAX, and Reader.\n\nAffected versions of this package are vulnerable to Command Injection via the undocumented method `Nokogiri::CSS::Tokenizer#load_file`. This allows commands to be executed in a subprocess.\n# Remediation\nUpgrade `nokogiri` to version 1.10.4-java or higher.\n# References\n- [GitHub Commit](https://github.com/sparklemotion/nokogiri/commit/5fe449fd3ab8cc25a71499128529c821c10dde83)\n- [GitHub Commit](https://github.com/tenderlove/rexical/commit/a652474dbc66be350055db3e8f9b3a7b3fd75926)\n- [GitHub Issue](https://github.com/sparklemotion/nokogiri/issues/1915)\n- [HackerOne Report (Private)](https://hackerone.com/reports/650835)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-78",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-534637",
+              "shortDescription": {
+                "text": "High severity - Uncontrolled Memory Allocation vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[nokogiri](https://nokogiri.org) is a gem for parsing HTML, XML, SAX, and Reader.\n\nAffected versions of this package are vulnerable to Uncontrolled Memory Allocation. Nokogiri bundles the `libxslt` C library, that has been recently discovered to have vulnerabilities.\r\n\r\nCVE-2019-13117\r\nIn `numbers.c` in `libxslt` 1.1.33, an `xsl:number` with certain format strings\r\ncould lead to a uninitialized read in `xsltNumberFormatInsertNumbers`. This\r\ncould allow an attacker to discern whether a byte on the stack contains the\r\ncharacters `A`, `a`, `I`, `i`, or `0`, or any other character.\r\n\r\nCVE-2019-13118\r\nIn `numbers.c` in `libxslt` 1.1.33, a type holding grouping characters of an\r\n`xsl:number` instruction was too narrow and an invalid character/length\r\ncombination could be passed to `xsltNumberFormatDecimal`, leading to a read\r\nof uninitialized stack data\r\n\r\nCVE-2019-18197\r\nIn `xsltCopyTex`t in `transform.c` in `libxslt` 1.1.33, a pointer variable isn't\r\nreset under certain circumstances. If the relevant memory area happened to\r\nbe freed and reused in a certain way, a bounds check could fail and memory\r\noutside a buffer could be written to, or uninitialized data could be\r\ndisclosed.\n# Remediation\nUpgrade `nokogiri` to version 1.10.5 or higher.\n# References\n- [GitHub Commit](https://github.com/sparklemotion/nokogiri/commit/061d75dfd462040bd075370e0b59dbc990873ecb)\n- [GitHub Commit](https://github.com/sparklemotion/nokogiri/commit/43a175339b47b8c604508813fc75b83f13cd173e)\n- [GitHub Issue](https://github.com/sparklemotion/nokogiri/issues/1943)\n- [libxslt patch (CVE-2019-13117)](https://gitlab.gnome.org/GNOME/libxslt/commit/c5eb6cf3aba0af048596106ed839b4ae17ecbcb1)\n- [libxslt patch (CVE-2019-13118)](https://gitlab.gnome.org/GNOME/libxslt/commit/6ce8de69330783977dd14f6569419489875fb71b)\n- [libxslt patch (CVE-2019-18197)](https://gitlab.gnome.org/GNOME/libxslt/commit/2232473733b7313d67de8836ea3b29eec6e8e285)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-789",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-552159",
+              "shortDescription": {
+                "text": "High severity - Denial of Service (DoS) vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "(CVE-2020-7595) nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n\n[nokogiri](https://nokogiri.org) is a gem for parsing HTML, XML, SAX, and Reader.\n\n\nAffected versions of this package are vulnerable to Denial of Service (DoS).\nIt bundles the `libxml2` library, which is vulnerable in versions below 2.9.10\n\n##Details\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its intended and legitimate users.\r\n\r\nUnlike other vulnerabilities, DoS attacks usually do not aim at breaching security. Rather, they are focused on making websites and services unavailable to genuine users resulting in downtime.\r\n\r\nOne popular Denial of Service vulnerability is DDoS (a Distributed Denial of Service), an attack that attempts to clog network pipes to the system by generating a large volume of traffic from many machines.\r\n\r\nWhen it comes to open source libraries, DoS vulnerabilities allow attackers to trigger such a crash or crippling of the service by using a flaw either in the application code or from the use of open source libraries.\r\n\r\nTwo common types of DoS vulnerabilities:\r\n\r\n* High CPU/Memory Consumption- An attacker sending crafted requests that could cause the system to take a disproportionate amount of time to process. For example, [commons-fileupload:commons-fileupload](SNYK-JAVA-COMMONSFILEUPLOAD-30082).\r\n\r\n* Crash - An attacker sending crafted requests that could cause the system to crash. For Example,  [npm `ws` package](npm:ws:20171108)\n\n# Remediation\n\nUpgrade `nokogiri` to version 1.10.8 or higher.\n\n\n# References\n\n- [GitHub Commit](https://github.com/sparklemotion/nokogiri/issues/1992)\n\n- [GitHub Security Advisory](https://github.com/advisories/GHSA-7553-jr98-vx47)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-200",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-NOKOGIRI-72433",
+              "shortDescription": {
+                "text": "High severity - Denial of Service (DoS) vulnerability in nokogiri"
+              },
+              "fullDescription": {
+                "text": "(CVE-2018-14404) nokogiri@1.5.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: nokogiri\n* Introduced through: project@*, ruby-gem-simple-vuln@0.1.0 and others\n### Detailed paths\n* _Introduced through_: project@* › ruby-gem-simple-vuln@0.1.0 › nokogiri@1.5.4\n# Overview\n[nokogiri](https://github.com/sparklemotion/nokogiri) is an HTML, XML, SAX, and Reader parser. Among Nokogiri's features is the ability to search documents via XPath or CSS3 selectors.\r\n\r\nAffected versions of this package are vulnerable to several Denial of Service (DoS) vulnerabilities. Nokogiri bundles the `libxml2` library, which is vulnerable in versions through 2.9.6.\r\n\r\n## CVE-2018-14404\r\n\r\nA NULL pointer dereference vulnerability exists in the `xpath.c:xmlXPathCompOpEval()` function of libxml2 through 2.9.8 when parsing an invalid XPath expression in the `XPATH_OP_AND` or `XPATH_OP_OR` case. Applications processing untrusted XSL format inputs with the use of the libxml2 library may be vulnerable to a denial of service attack due to a crash of the application\r\n\r\n## CVE-2018-14567\r\n\r\nIf `--with-lzma` is used, allows remote attackers to cause a denial of service (infinite loop) via a crafted XML file that triggers `LZMA_MEMLIMIT_ERROR`, as demonstrated by xmllint\r\ninfinite loop in LZMA decompression.\r\n\r\n# Remediation\r\nUpgrade `nokogiri` to version 1.8.5 or higher.\n\n# References\n- [GitHub Commit](https://github.com/sparklemotion/nokogiri/commit/7b8cd0f5b15a926e92c869b450dd6f71cdd17b61)\n- [GitHub Issue](https://github.com/sparklemotion/nokogiri/issues/1785)\n- [GitHub PR](https://github.com/sparklemotion/nokogiri/pull/1786)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-476",
+                  "rubygems"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-RUBY-RAKE-552000",
+              "shortDescription": {
+                "text": "High severity - Arbitrary Code Injection vulnerability in rake"
+              },
+              "fullDescription": {
+                "text": "(CVE-2020-8130) rake@10.5.0"
+              },
+              "help": {
+                "text": "",
+                "markdown": "* Package Manager: rubygems\n* Vulnerable module: rake\n* Introduced through: project@* and rake@10.5.0\n### Detailed paths\n* _Introduced through_: project@* › rake@10.5.0\n# Overview\n[rake](https://github.com/ruby/rake) is a Make-like program implemented in Ruby.\n\nAffected versions of this package are vulnerable to Arbitrary Code Injection in `Rake::FileList` when supplying a filename that begins with the pipe character `|`.\r\n\r\n# PoC by Katsuhiko Yoshida\r\n\r\n```\r\n% ls -1\r\nGemfile\r\nGemfile.lock\r\npoc_rake.rb\r\nvendor\r\n| touch evil.txt\r\n% bundle exec ruby poc_rake.rb\r\n[\"poc_rake.rb\", \"Gemfile\", \"Gemfile.lock\", \"| touch evil.txt\", \"vendor\"]\r\npoc_rake.rb:6:list.egrep(/something/)\r\nError while processing 'vendor': Is a directory @ io_fillbuf - fd:7 vendor\r\n% ls -1\r\nGemfile\r\nGemfile.lock\r\nevil.txt\r\npoc_rake.rb\r\nvendor\r\n| touch evil.txt\r\n```\n# Remediation\nUpgrade `rake` to version 12.3.3 or higher.\n# References\n- [HackerOne Report](https://hackerone.com/reports/651518)\n"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-94",
+                  "rubygems"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-1055008",
+          "level": "note",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a low severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-20127",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-20129",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-20157",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-20214",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-20299",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-20367",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-20368",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-20432",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-22013",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-22014",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-459107",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-534637",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-552159",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-NOKOGIRI-72433",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable nokogiri package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-RUBY-RAKE-552000",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable rake package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Gemfile"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
